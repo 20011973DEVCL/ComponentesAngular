@@ -2,7 +2,6 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[appOnlyDigitsInputDirective]',
-  standalone: true
 })
 export class OnlyDigitsInputDirectiveDirective {
 
@@ -12,9 +11,13 @@ export class OnlyDigitsInputDirectiveDirective {
   const input = event.target as HTMLInputElement;
   const initialValue = input.value;
 
-  const cleanedValue = initialValue.replace(/[])
+  // Limpiar cualquier caracter que no sea numero
+  const cleanedValue = initialValue.replace(/[^0-9]/g, '');
 
-  /Users/developer/Pictures/Photos Library.photoslibrary/resources/derivatives/F/FBA3FA0E-0CB9-4F59-BC3B-46CF8953670A_1_105_c.jpeg
+  // Si el valor limpio no es igual al valor original, establece el valor del campo de entrada
+  if (cleanedValue !== initialValue) {
+    input.value = cleanedValue;
+    input.dispatchEvent(new Event('input'));
+  }
  }
-
 }
